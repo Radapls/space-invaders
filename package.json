@@ -1,0 +1,27 @@
+{
+  "name": "space-invaders",
+  "version": "0.0.0",
+  "description": "A space invaders game with your commits",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Radapls/space-invaders-md.git"
+  },
+  "keywords": [
+    "space-invaders",
+    "game",
+    "typescript"
+  ],
+  "author": "Radapls",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Radapls/space-invaders-md/issues"
+  },
+  "homepage": "https://github.com/Radapls/space-invaders-md#readme",
+  "dependencies": {
+    "typescript": "^4.9.5"
+  }
+}
