@@ -57,7 +57,8 @@ function drawShip()
 // Dibujar el contador
 function drawScore(): void
 {
-    context.font = '16px Montserrat';
+    context.font = 'bold 20px Courier New';
+    context.fontKerning
     context.fillStyle = 'white';
     context.fillText('Score: ' + score, 8, 20);
 }
