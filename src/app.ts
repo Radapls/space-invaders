@@ -11,12 +11,16 @@
  * @date Wednesday, 15th March 2023
  */
 
+import { Bullet } from "./models/bullet.model";
+import { Ship } from "./models/ship.model";
+import { Target } from "./models/target.model";
+
 // Crear el canvas
-const canvas = document.getElementById('canvas');
-const context: HTMLCanvasElement = canvas.getContext('2d');
+const canvas = document.getElementById('canvas') as HTMLCanvasElement;
+const context = canvas.getContext('2d') as CanvasRenderingContext2D;
 
 // Crear la nave espacial
-const ship = {
+const ship: Ship = {
     x: canvas.width / 2,
     y: canvas.height - 50,
     width: 40,
@@ -27,33 +31,43 @@ const ship = {
 
 ship.image.src = 'https://cdn-icons-png.flaticon.com/512/1985/1985828.png';
 
-const bullet = {
+const bullet: Bullet = {
     x: ship.x + ship.width / 2,
     y: ship.y,
-    radius: 3,
-    speed: 7,
-    destroyed: false
+    radius: 5,
+    speed: 10,
+    destroyed: true
 };
 
-// Dibujar la nave espacial
-function drawShip()
-{
-    context.drawImage(ship.image, ship.x, ship.y, ship.width, ship.height);
-}
+const targets: Target[] = [
+    { x: 100, y: 100, width: 50, height: 50, destroyed: false },
+    { x: 200, y: 200, width: 50, height: 50, destroyed: false },
+    { x: 300, y: 300, width: 50, height: 50, destroyed: false }
+];
 
 // Inicializar el contador
 let score = 0;
 
-// Dibujar el contador
-function drawScore()
+// Dibujar la nave espacial
+function drawShip()
 {
-    context.font = "16px Montserrat";
-    context.fillStyle = "black";
-    context.fillText("Score: " + score, 8, 20);
+    context.beginPath();
+    context.rect(ship.x, ship.y, ship.width, ship.height);
+    context.fillStyle = 'red';
+    context.fill();
+    context.closePath();
+}
+
+// Dibujar el contador
+function drawScore(): void
+{
+    context.font = '16px Montserrat';
+    context.fillStyle = 'black';
+    context.fillText('Score: ' + score, 8, 20);
 }
 
 // Mover la nave espacial
-function moveShip(direction)
+function moveShip(direction: string): void
 {
     if (direction === 'left')
     {
@@ -73,29 +87,29 @@ function moveShip(direction)
 
 // Obtener los commits de GitHub
 fetch('https://api.github.com/repos/Radapls/radapls.github.io/commits')
-    .then(response => response.json())
-    .then(commits =>
+    .then((response) => response.json())
+    .then((commits) =>
     {
         // Crear los objetivos (los commits de GitHub)
-        const targets = commits.map(commit => ({
+        const targets = commits.map(() => ({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height / 2,
             width: 12,
             height: 12,
-            destroyed: false
+            destroyed: false,
         }));
 
-        function generateColor()
+        function generateColor(): string
         {
-            const colors = [ "#39d353", "#26a641", "#006d32", "#0e4429" ];
+            const colors = [ '#39d353', '#26a641', '#006d32', '#0e4429' ];
             const randomIndex = Math.floor(Math.random() * colors.length);
             return colors[ randomIndex ];
         }
 
         // Dibujar los objetivos
-        function drawTargets()
+        function drawTargets(): void
         {
-            targets.forEach(target =>
+            targets.forEach((target: any) =>
             {
                 if (!target.destroyed)
                 {
@@ -105,18 +119,18 @@ fetch('https://api.github.com/repos/Radapls/radapls.github.io/commits')
                     context.lineWidth = 15;
                     context.fillStyle = '#26a641';
                     context.lineWidth = 2;
-                    context.strokeStyle = "black";
+                    context.strokeStyle = 'black';
                     context.fill();
                     context.closePath();
-                    context.strokeRect(0, 0, canvas.width, canvas.height);//for white background
+                    context.strokeRect(0, 0, canvas.width, canvas.height); // for white background
                 }
             });
         }
 
         // Mover los objetivos
-        function moveTargets()
+        function moveTargets(): void
         {
-            targets.forEach(target =>
+            targets.forEach((target: any) =>
             {
                 if (!target.destroyed)
                 {
@@ -133,7 +147,7 @@ fetch('https://api.github.com/repos/Radapls/radapls.github.io/commits')
         // Detectar colisiones
         function detectCollisions()
         {
-            targets.forEach(target =>
+            targets.forEach((target: any) =>
             {
                 if (!target.destroyed)
                 {
@@ -167,7 +181,7 @@ fetch('https://api.github.com/repos/Radapls/radapls.github.io/commits')
                 {
                     bullet.destroyed = true;
                 }
-                targets.forEach(target =>
+                targets.forEach((target: any) =>
                 {
                     if (!target.destroyed)
                     {
@@ -279,7 +293,7 @@ function update()
 update();
 
 // Obtener el botón de reinicio de juego
-const resetButton = document.getElementById('reset-button');
+const resetButton = document.getElementById('reset-button') as HTMLButtonElement;
 
 // Agregar un event listener al botón de reinicio de juego
 resetButton.addEventListener('click', () =>
