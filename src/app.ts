@@ -51,18 +51,14 @@ let score = 0;
 // Dibujar la nave espacial
 function drawShip()
 {
-    context.beginPath();
-    context.rect(ship.x, ship.y, ship.width, ship.height);
-    context.fillStyle = 'red';
-    context.fill();
-    context.closePath();
+    context.drawImage(ship.image, ship.x, ship.y, ship.width, ship.height);
 }
 
 // Dibujar el contador
 function drawScore(): void
 {
     context.font = '16px Montserrat';
-    context.fillStyle = 'black';
+    context.fillStyle = 'white';
     context.fillText('Score: ' + score, 8, 20);
 }
 
@@ -119,7 +115,7 @@ fetch('https://api.github.com/repos/Radapls/radapls.github.io/commits')
                     context.lineWidth = 15;
                     context.fillStyle = '#26a641';
                     context.lineWidth = 2;
-                    context.strokeStyle = 'black';
+                    context.strokeStyle = 'white';
                     context.fill();
                     context.closePath();
                     context.strokeRect(0, 0, canvas.width, canvas.height); // for white background
