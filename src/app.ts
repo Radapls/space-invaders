@@ -99,12 +99,12 @@ fetch('https://api.github.com/repos/Radapls/radapls.github.io/commits')
             destroyed: false,
         }));
 
-        function generateColor(): string
-        {
-            const colors = [ '#39d353', '#26a641', '#006d32', '#0e4429' ];
-            const randomIndex = Math.floor(Math.random() * colors.length);
-            return colors[ randomIndex ];
-        }
+        // function generateColor(): string
+        // {
+        //     const colors = [ '#39d353', '#26a641', '#006d32', '#0e4429' ];
+        //     const randomIndex = Math.floor(Math.random() * colors.length);
+        //     return colors[ randomIndex ];
+        // }
 
         // Dibujar los objetivos
         function drawTargets(): void
@@ -321,5 +321,5 @@ resetButton.addEventListener('click', () =>
     bullet.destroyed = false;
 
     // Dibujar todo de nuevo
-    draw();
+    // draw();
 });
