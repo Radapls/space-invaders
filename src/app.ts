@@ -13,7 +13,7 @@
 
 // Crear el canvas
 const canvas = document.getElementById('canvas');
-const context = canvas.getContext('2d');
+const context: HTMLCanvasElement = canvas.getContext('2d');
 
 // Crear la nave espacial
 const ship = {
