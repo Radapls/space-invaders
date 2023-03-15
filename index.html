@@ -6,22 +6,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space Invaders</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     <script type="module" src="dist/bundle.js"></script>
-    <style>
-        canvas {
-            border: 1px solid black;
-        }
-    </style>
 </head>
 
 <body>
+    <h1>Space Invaders</h1>
     <div class="main"></div>
-    <canvas id="canvas" width="800px" height="200px"></canvas>
+    <div class="container">
+        <canvas id="canvas" width="800px" height="200px"></canvas>
+    </div>
+
+    <h2>Convert you Github into a game</h2>
 
     <script>
         function randomNumber(min, max)
@@ -35,6 +38,5 @@
         {
             result += `${randomNumber(-50, 50)}vw ${randomNumber(-50, 50)}vh ${randomNumber(0, 3)}px ${randomNumber(0, 3)}px #fff,`
         }
-        console.log(result.substring(0, result.length - 1))
     </script>
 </body>
