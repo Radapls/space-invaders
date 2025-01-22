@@ -19,6 +19,8 @@ import { Target } from "./models/target.model";
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 const context = canvas.getContext('2d') as CanvasRenderingContext2D;
 
+let githubUser: string = 'radapls';
+
 // Crear la nave espacial
 const ship: Ship = {
     x: canvas.width / 2,
@@ -39,7 +41,7 @@ const bullet: Bullet = {
     destroyed: true
 };
 
-const targets: Target[] = [
+let targets: Target[] = [
     { x: 100, y: 100, width: 50, height: 50, destroyed: false },
     { x: 200, y: 200, width: 50, height: 50, destroyed: false },
     { x: 300, y: 300, width: 50, height: 50, destroyed: false }
@@ -82,26 +84,21 @@ function moveShip(direction: string): void
     }
 }
 
-// Obtener los commits de GitHub
-fetch('https://api.github.com/repos/Radapls/radapls.github.io/commits')
-    .then((response) => response.json())
-    .then((commits) =>
-    {
-        // Crear los objetivos (los commits de GitHub)
-        const targets = commits.map(() => ({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height / 2,
-            width: 12,
-            height: 12,
-            destroyed: false,
-        }));
+function drawBullet()
+{
+    context.beginPath();
+    context.arc(bullet.x, bullet.y, bullet.radius, 0, Math.PI * 2);
+    context.fillStyle = 'blue';
+    context.fill();
+    context.closePath();
+}
 
-        // function generateColor(): string
-        // {
-        //     const colors = [ '#39d353', '#26a641', '#006d32', '#0e4429' ];
-        //     const randomIndex = Math.floor(Math.random() * colors.length);
-        //     return colors[ randomIndex ];
-        // }
+function generateColor(): string
+{
+    const colors = [ '#39d353', '#26a641', '#006d32', '#0e4429' ];
+    const randomIndex = Math.floor(Math.random() * colors.length);
+    return colors[ randomIndex ];
+}
 
         // Dibujar los objetivos
         function drawTargets(): void
@@ -114,7 +111,7 @@ fetch('https://api.github.com/repos/Radapls/radapls.github.io/commits')
                     context.rect(target.x, target.y, target.width, target.height);
                     context.shadowBlur = 20;
                     context.lineWidth = 15;
-                    context.fillStyle = '#26a641';
+                    context.fillStyle = generateColor();
                     context.lineWidth = 2;
                     context.strokeStyle = 'white';
                     context.fill();
@@ -160,15 +157,6 @@ fetch('https://api.github.com/repos/Radapls/radapls.github.io/commits')
             });
         }
 
-        function drawBullet()
-        {
-            context.beginPath();
-            context.arc(bullet.x, bullet.y, bullet.radius, 0, Math.PI * 2);
-            context.fillStyle = 'blue';
-            context.fill();
-            context.closePath();
-        }
-
         function moveBullet()
         {
             if (!bullet.destroyed)
@@ -194,7 +182,6 @@ fetch('https://api.github.com/repos/Radapls/radapls.github.io/commits')
             }
         }
 
-
         // Dibujar todo
         function draw()
         {
@@ -214,6 +201,22 @@ fetch('https://api.github.com/repos/Radapls/radapls.github.io/commits')
         }
 
 
+// Obtener los commits de GitHub
+fetch(`https://api.github.com/repos/${githubUser}/${githubUser}.github.io/commits`)
+    .then((response) => response.json())
+    .then((commits) =>
+    {
+        // Crear los objetivos (los commits de GitHub)
+        targets = commits.map(() => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height / 2,
+            width: 12,
+            height: 12,
+            destroyed: false,
+        }));
+
+
+
         // Iniciar el juego
         draw();
     });
@@ -221,57 +224,68 @@ fetch('https://api.github.com/repos/Radapls/radapls.github.io/commits')
 // Crear un objeto para almacenar el estado actual de las teclas
 const keys = {
     left: false,
-    right: false
+    right: false,
+    down: false, 
+    up: false
 };
 
 document.addEventListener('keydown', event =>
-{
-    if (event.code === 'ArrowLeft')
     {
-        keys.left = true;
-    } else if (event.code === 'ArrowRight')
-    {
-        keys.right = true;
-    } else if (event.code === 'Space')
-    {
-        // Disparar la bala
-        if (bullet.destroyed)
+        if (event.code === 'ArrowLeft')
         {
-            bullet.destroyed = false;
-            bullet.x = ship.x + ship.width / 2;
-            bullet.y = ship.y;
-        }
-    }
-});
-
-
-document.addEventListener('keyup', event =>
-{
-    if (event.code === 'ArrowLeft')
-    {
-        keys.left = false;
-    } else if (event.code === 'ArrowRight')
-    {
-        keys.right = false;
-    } else if (event.code === 'Space')
-    {
-        // Disparar la bala
-        if (bullet.destroyed)
+            keys.left = true;
+        } else if (event.code === 'ArrowRight')
         {
-            bullet.destroyed = false;
-            bullet.x = ship.x + ship.width / 2;
-            bullet.y = ship.y;
+            keys.right = true;
+        } else if (event.code === 'ArrowUp') // Add up movement
+        {
+            keys.up = true;
+        } else if (event.code === 'ArrowDown') // Add down movement
+        {
+            keys.down = true;
+        } else if (event.code === 'Space')
+        {
+            // Disparar la bala
+            if (bullet.destroyed)
+            {
+                bullet.destroyed = false;
+                bullet.x = ship.x + ship.width / 2;
+                bullet.y = ship.y;
+            }
         }
-    }
-});
-
-// Actualizar la posición de la nave continuamente en un loop de juego
-function update()
-{
-    // Mover la nave si la tecla de flecha izquierda está presionada
-    // Actualizar la nave espacial
+    });
+    
+    
+    document.addEventListener('keyup', event =>
+    {
+        if (event.code === 'ArrowLeft')
+        {
+            keys.left = false;
+        } else if (event.code === 'ArrowRight')
+        {
+            keys.right = false;
+        } else if (event.code === 'ArrowUp') // Stop up movement
+        {
+            keys.up = false;
+        } else if (event.code === 'ArrowDown') // Stop down movement
+        {
+            keys.down = false;
+        } else if (event.code === 'Space')
+        {
+            // Disparar la bala
+            if (bullet.destroyed)
+            {
+                bullet.destroyed = false;
+                bullet.x = ship.x + ship.width / 2;
+                bullet.y = ship.y;
+            }
+        }
+    });
+    
+    // Update the moveShip function to handle up and down movement
     function update()
     {
+        // Mover la nave si la tecla de flecha izquierda/derecha/arriba/abajo está presionada
         if (keys.left)
         {
             moveShip('left');
@@ -280,14 +294,23 @@ function update()
         {
             moveShip('right');
         }
+        if (keys.up) // Move up
+        {
+            ship.y -= ship.speed;
+            if (ship.y < 0) // Prevent moving out of bounds
+            {
+                ship.y = 0;
+            }
+        }
+        if (keys.down) // Move down
+        {
+            ship.y += ship.speed;
+            if (ship.y > canvas.height - ship.height) // Prevent moving out of bounds
+            {
+                ship.y = canvas.height - ship.height;
+            }
+        }
     }
-
-    // Volver a llamar a la función update en el siguiente frame de animación
-    requestAnimationFrame(update);
-}
-
-// Llamar a la función update para iniciar el loop de juego
-update();
 
 // Obtener el botón de reinicio de juego
 const resetButton = document.getElementById('reset-button') as HTMLButtonElement;
@@ -317,6 +340,5 @@ resetButton.addEventListener('click', () =>
     bullet.y = ship.y;
     bullet.destroyed = false;
 
-    // Dibujar todo de nuevo
-    // draw();
 });
+
