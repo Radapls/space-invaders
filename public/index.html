@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <!-- ---------- Meta ---------- -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ---------- Título ---------- -->
+  <title>Space Invaders</title>
+
+  <!-- ---------- Fuentes ---------- -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <!-- ---------- Íconos / Manifest ---------- -->
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="manifest" href="site.webmanifest">
+
+  <!-- ---------- CSS ---------- -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <header class="header">
+    <h1>Radapls Space Invaders</h1>
+
+    <section class="rules">
+      <h2>Reglas de juego</h2>
+
+      <ol>
+        <li>Haz. click en la barra espaciadora para disparar</li>
+        <li>Muévete en la pantalla con las flechas a izquierda y derecha de tu teclado</li>
+        <li>Para reiniciar el juego, da click en el botón reiniciar</li>
+
+
+      </ol>
+    </section>
+    <button id="reset-button" class="reset-btn">Reiniciar</button>
+  </header>
+
+  <main class="container">
+    <canvas id="canvas" width="800" height="600"></canvas>
+  </main>
+
+
+  <script>
+    const STAR_COUNT = 150;
+    let stars = '';
+    for (let i = 0; i < STAR_COUNT; i++) {
+      const x = Math.floor(Math.random() * 800);
+      const y = Math.floor(Math.random() * 600);
+      const size = Math.floor(Math.random() * 3) + 1;
+      stars += `${x}px ${y}px ${size}px #fff,`;
+    }
+    document.documentElement.style.setProperty('--stars', stars);
+  </script>
+</body>
+
+</html>

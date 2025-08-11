@@ -1,21 +1,19 @@
-/**
- * RADAPLS PROJECTS
- * ------------------
- * Copyright (C) 2023 Juan Felipe Rada - All Rights Reserved.
- *
- * This file, project or its parts can not be copied and/or distributed without
- * the express permission of Juan Felipe Rada.
- *
- * @file bullet.model.ts
- * @author Juan Felipe Rada <radapls8@gmail.com>
- * @date Wednesday, 15th March 2023
- */
+import { GameObject } from './gameObject';
+import { BULLET } from '../config';
+import { Ship } from './ship.model';
 
-export interface Bullet
-{
-    x: number;
-    y: number;
-    radius: number;
-    speed: number;
-    destroyed: boolean;
+export interface Bullet extends GameObject {
+  radius: number;
+  speed: number;
+  destroyed: boolean;
 }
+
+export const createBullet = (ship: Ship): Bullet => ({
+  x: ship.x + ship.width / 2,
+  y: ship.y,
+  radius: BULLET.RADIUS,
+  speed: BULLET.SPEED,
+  width: 2,
+  height: 2,
+  destroyed: true
+});

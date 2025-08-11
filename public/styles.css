@@ -24,10 +24,31 @@ body {
   align-content: center;
 }
 
-button {
+.header {
+  display: grid;
+  place-content: center;
+  h1 {
+    font-size: 50px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  li {
+    font-size: 1rem;
+  }
+
+  button {
     margin: 16px 0;
-    padding: 8px;
-    color: black;
+      padding: 8px;
+      color: black;
+  }
+}
+
+#canvas
+{
+  border: solid white 1px;
 }
 
 .container {

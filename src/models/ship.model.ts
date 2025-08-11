@@ -1,21 +1,21 @@
-/**
- * RADAPLS PROJECTS
- * ------------------
- * Copyright (C) 2023 Juan Felipe Rada - All Rights Reserved.
- *
- * This file, project or its parts can not be copied and/or distributed without
- * the express permission of Juan Felipe Rada.
- *
- * @file ship.model.ts
- * @author Juan Felipe Rada <radapls8@gmail.com>
- * @date Wednesday, 15th March 2023
- */
-export interface Ship
-{
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-    speed: number;
-    image: HTMLImageElement;
+import { SHIP } from "../config";
+import { GameObject } from "./gameObject";
+
+export interface Ship extends GameObject {
+  speed: number;
+  image: HTMLImageElement;
 }
+
+export const createShip = (canvas: HTMLCanvasElement): Ship => {
+  const img = new Image();
+  img.src = SHIP.IMAGE_SRC;
+  return {
+    x: canvas.width / 2,
+    y: canvas.height - SHIP.HEIGHT - 10,
+    width: SHIP.WIDTH,
+    height: SHIP.HEIGHT,
+    speed: SHIP.SPEED,
+    image: img,
+    destroyed: false
+  };
+};
