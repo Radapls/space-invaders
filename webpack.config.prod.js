@@ -5,6 +5,7 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'production',
@@ -24,6 +25,16 @@ module.exports = {
       template: './public/index.html',
       filename: 'index.html',
       minify: { collapseWhitespace: true, removeComments: true },
-    })
+    }),
+        new CopyPlugin({
+          patterns: [
+            {
+              from: 'public', to: '',
+              globOptions: {
+                ignore: ['**/index.html']
+              },
+            }
+          ],
+        }),
   ]
 };
