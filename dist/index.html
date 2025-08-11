@@ -1,9 +1,0 @@
-<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Space Invaders – GitHub Edition</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"><link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"><link rel="manifest" href="site.webmanifest"><link rel="stylesheet" href="styles.css"><script defer="defer" src="/bundle.39a9f4683cd8fd752390.js"></script></head><body><header class="header"><h1>Space Invaders – GitHub Edition</h1><button id="reset-button" class="reset-btn">Reset</button></header><main class="game-wrapper"><canvas id="canvas" width="800" height="600"></canvas></main><footer class="footer"><h2>Convierte tu GitHub en un juego</h2></footer><script>const STAR_COUNT = 150;
-    let stars = '';
-    for (let i = 0; i < STAR_COUNT; i++) {
-      const x = Math.floor(Math.random() * 800);
-      const y = Math.floor(Math.random() * 600);
-      const size = Math.floor(Math.random() * 3) + 1;
-      stars += `${x}px ${y}px ${size}px #fff,`;
-    }
-    document.documentElement.style.setProperty('--stars', stars);</script></body></html>
