@@ -1,49 +1,49 @@
-/**
- * RADAPLS PROJECTS
- * ------------------
- * Copyright (C) 2023 Juan Felipe Rada - All Rights Reserved.
- *
- * This file, project or its parts can not be copied and/or distributed without
- * the express permission of Juan Felipe Rada.
- *
- * @file webpack.config.js
- * @author Juan Felipe Rada <radapls8@gmail.com>
- * @date Wednesday, 15th March 2023
- */
+/* ────────────────────────────────────────────────────────────── */
+/*  webpack.config.dev.js                                         */
+/* ────────────────────────────────────────────────────────────── */
 
 const path = require('path');
-
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 module.exports = {
-    mode: 'development',
-    entry: './src/app.ts',
-    performance: {
-        hints: false
-    },
-    output: {
-        filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist'),
-        publicPath: '/dist/',
-    },
-    devServer: {
-        static:
-        {
-            directory: path.join(__dirname, './')
-        },
-        compress: true,
-        port: 3000
+  mode: 'development',
+  entry: './src/index.ts',
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/'
+  },
 
-    },
-    devtool: 'inline-source-map',
-    module: {
-        rules: [
-            {
-                test: /\.ts$/,
-                use: 'ts-loader',
-                exclude: /node_modules/
-            }
-        ]
-    },
-    resolve: {
-        extensions: [ '.ts', '.js' ]
-    },
+  devtool: 'inline-source-map',
+  devServer: {
+    static: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 3000,
+    hot: true
+  },
+
+  module: {
+    rules: [
+      { test: /\.ts$/, use: 'ts-loader', exclude: /node_modules/ },
+    ],
+  },
+
+  resolve: { extensions: ['.ts', '.js'] },
+
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+      filename: 'index.html'
+    }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: 'public', to: '',
+          globOptions: {
+            ignore: ['**/index.html']
+          },
+        }
+      ],
+    }),
+  ],
 };
